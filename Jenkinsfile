@@ -84,9 +84,9 @@ pipeline {
     }
     success {
         
-        mail to: 'sejalthakur@gmail.com', subject: 'Pipeline Succeeded', body: 'Your app has been deployed successfully.'
+        mail to: 'sejalthakur016@gmail.com', subject: 'Pipeline Succeeded', body: 'Your app has been deployed successfully.'
     }
     failure {
-        mail to: ‘sejalthakur@gmail.com’ subject: 'Pipeline Failed', body: 'Check Jenkins logs for details.'
+        mail to: ‘sejalthakur016@gmail.com’ subject: 'Pipeline Failed', body: 'Check Jenkins logs for details.'
     }
 }
