@@ -1,0 +1,182 @@
+[
+    {
+        "label": "Instrumentator",
+        "importPath": "prometheus_fastapi_instrumentator",
+        "description": "prometheus_fastapi_instrumentator",
+        "isExtraImport": true,
+        "detail": "prometheus_fastapi_instrumentator",
+        "documentation": {}
+    },
+    {
+        "label": "FastAPI",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "services",
+        "importPath": "app",
+        "description": "app",
+        "isExtraImport": true,
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "UserIn",
+        "importPath": "app.schema",
+        "description": "app.schema",
+        "isExtraImport": true,
+        "detail": "app.schema",
+        "documentation": {}
+    },
+    {
+        "label": "BaseResponse",
+        "importPath": "app.schema",
+        "description": "app.schema",
+        "isExtraImport": true,
+        "detail": "app.schema",
+        "documentation": {}
+    },
+    {
+        "label": "UserListOut",
+        "importPath": "app.schema",
+        "description": "app.schema",
+        "isExtraImport": true,
+        "detail": "app.schema",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "backend.app.main",
+        "description": "backend.app.main",
+        "peekOfCode": "app = FastAPI()\nInstrumentator().instrument(app).expose(app, endpoint=\"/metrics\")\n@app.get(\"/\")\nasync def index():\n    \"\"\"\n    Index route for our application\n    \"\"\"\n    return {\"message\": \"Hello from FastAPI -@kiranrakh155@gmail.com ;)\"}\n@app.post(\"/users\", response_model=BaseResponse)\nasync def user_create(user: UserIn):",
+        "detail": "backend.app.main",
+        "documentation": {}
+    },
+    {
+        "label": "UserIn",
+        "kind": 6,
+        "importPath": "backend.app.schema",
+        "description": "backend.app.schema",
+        "peekOfCode": "class UserIn(BaseModel):\n    first_name: str\n    last_name: str\n    age: int\nclass BaseResponse(BaseModel):\n    success: bool\nclass UserListOut(BaseModel):\n    data: List[UserIn]",
+        "detail": "backend.app.schema",
+        "documentation": {}
+    },
+    {
+        "label": "BaseResponse",
+        "kind": 6,
+        "importPath": "backend.app.schema",
+        "description": "backend.app.schema",
+        "peekOfCode": "class BaseResponse(BaseModel):\n    success: bool\nclass UserListOut(BaseModel):\n    data: List[UserIn]",
+        "detail": "backend.app.schema",
+        "documentation": {}
+    },
+    {
+        "label": "UserListOut",
+        "kind": 6,
+        "importPath": "backend.app.schema",
+        "description": "backend.app.schema",
+        "peekOfCode": "class UserListOut(BaseModel):\n    data: List[UserIn]",
+        "detail": "backend.app.schema",
+        "documentation": {}
+    },
+    {
+        "label": "check_dataset_exists",
+        "kind": 2,
+        "importPath": "backend.app.services",
+        "description": "backend.app.services",
+        "peekOfCode": "def check_dataset_exists():\n    if not os.path.exists(datafolder):\n        os.mkdir(datafolder)\n    if not os.path.exists(datasource):\n        with open(datasource, \"w\") as f:\n            f.write(\"\")\ndef read_usersdata():\n    check_dataset_exists()\n    with open(datasource, \"r\") as f:\n        content = f.read()",
+        "detail": "backend.app.services",
+        "documentation": {}
+    },
+    {
+        "label": "read_usersdata",
+        "kind": 2,
+        "importPath": "backend.app.services",
+        "description": "backend.app.services",
+        "peekOfCode": "def read_usersdata():\n    check_dataset_exists()\n    with open(datasource, \"r\") as f:\n        content = f.read()\n        if content == \"\":\n            content = '{\"data\": []}'\n        users = json.loads(content)\n    return users\ndef add_userdata(user: dict):\n    users = read_usersdata()",
+        "detail": "backend.app.services",
+        "documentation": {}
+    },
+    {
+        "label": "add_userdata",
+        "kind": 2,
+        "importPath": "backend.app.services",
+        "description": "backend.app.services",
+        "peekOfCode": "def add_userdata(user: dict):\n    users = read_usersdata()\n    with open(datasource, \"w\") as f:\n        if \"data\" in users:\n            users[\"data\"].append(user)\n        else:\n            users[\"data\"] = [user]\n        data = json.dumps(users, indent=2)\n        f.write(data)",
+        "detail": "backend.app.services",
+        "documentation": {}
+    },
+    {
+        "label": "BASE_DIR",
+        "kind": 5,
+        "importPath": "backend.app.services",
+        "description": "backend.app.services",
+        "peekOfCode": "BASE_DIR = Path(__file__).resolve().parent\ndatafolder = os.path.join(BASE_DIR, \"data\")\ndatasource = os.path.join(datafolder, \"users.json\")\ndef check_dataset_exists():\n    if not os.path.exists(datafolder):\n        os.mkdir(datafolder)\n    if not os.path.exists(datasource):\n        with open(datasource, \"w\") as f:\n            f.write(\"\")\ndef read_usersdata():",
+        "detail": "backend.app.services",
+        "documentation": {}
+    },
+    {
+        "label": "datafolder",
+        "kind": 5,
+        "importPath": "backend.app.services",
+        "description": "backend.app.services",
+        "peekOfCode": "datafolder = os.path.join(BASE_DIR, \"data\")\ndatasource = os.path.join(datafolder, \"users.json\")\ndef check_dataset_exists():\n    if not os.path.exists(datafolder):\n        os.mkdir(datafolder)\n    if not os.path.exists(datasource):\n        with open(datasource, \"w\") as f:\n            f.write(\"\")\ndef read_usersdata():\n    check_dataset_exists()",
+        "detail": "backend.app.services",
+        "documentation": {}
+    },
+    {
+        "label": "datasource",
+        "kind": 5,
+        "importPath": "backend.app.services",
+        "description": "backend.app.services",
+        "peekOfCode": "datasource = os.path.join(datafolder, \"users.json\")\ndef check_dataset_exists():\n    if not os.path.exists(datafolder):\n        os.mkdir(datafolder)\n    if not os.path.exists(datasource):\n        with open(datasource, \"w\") as f:\n            f.write(\"\")\ndef read_usersdata():\n    check_dataset_exists()\n    with open(datasource, \"r\") as f:",
+        "detail": "backend.app.services",
+        "documentation": {}
+    }
+]
