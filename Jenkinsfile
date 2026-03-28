@@ -67,10 +67,10 @@ pipeline {
             }
             post {
                 success {
-                    echo 'Deployment successful! Check your cloud console.'
+                    echo 'Deployment successful!'
                 }
                 failure {
-                    echo 'Deployment failed; verify cloud credentials and resources.'
+                    echo 'Deployment failed !'
                 }
             }
         }
