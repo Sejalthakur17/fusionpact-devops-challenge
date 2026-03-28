@@ -75,18 +75,3 @@ pipeline {
             }
         }
     }
-
-    post {
-    always {
-       
-        sh 'docker system prune -f'
-        echo 'Pipeline completed.'
-    }
-    success {
-        
-        mail to: 'sejalthakur016@gmail.com', subject: 'Pipeline Succeeded', body: 'Your app has been deployed successfully.'
-    }
-    failure {
-        mail to: ‘sejalthakur016@gmail.com’ subject: 'Pipeline Failed', body: 'Check Jenkins logs for details.'
-    }
-}
